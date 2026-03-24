@@ -1,0 +1,39 @@
+<body>
+  <style>
+    body {
+      font-family: monospace;
+    }
+  </style>
+</body>
+<p>
+  A ordinal large number that handles arithmetic sequence.
+</p>
+<ul>
+  <li>
+    Ordinal.pow
+    <p>Power you want to do it large number. Here's a example: <code>function pow(base,exp){
+base=new Decimal(base);
+exp=new Decimal(exp);
+if(!base.isFinite()||!exp.isFinite()) throw new Error("OrdinalError: NaN is not defined.");
+const r=Decimal.pow(base,exp);
+if(r.gt(MAX)) throw new Error("OrdinalError: Number exceeded the limit because the range is Infinity.");
+return r;
+}
+    </code></p>
+    <li>
+    epsilonPlus, zetaPlus, gammaPlus, and omegaBigPlus.
+    <p>Plus functions you want to do it large number. Here's a example: <code>
+
+function omegaPlus(n){
+let r="ω";
+for(let i=0;i<n;i++) r+="+";
+return r;
+}
+
+function epsilonPlus(){return "ε+";}
+function zetaPlus(){return "ζ+";}
+function gammaPlus(){return "Γ+";}
+function omegaBigPlus(){return "Ω+";}
+    </code></p>
+  </li>
+</ul>
