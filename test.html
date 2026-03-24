@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ordinal Converter</title>
+</head>
+<body>
+<textarea id="input" style="width:100%;height:150px;"></textarea>
+<button onclick="convert()">Convert</button>
+<textarea id="output" style="width:100%;height:150px;"></textarea>
+
+<style>
+  body {
+    font-family: monospace;
+  }
+</style>
+<script src="https://github.com/MakiNishi3/ordinal.js/raw/refs/heads/master/ordinal.js"></script>
+<script>
+function parseOrdinal(str){
+    if(typeof str !== "string") throw "OrdinalError: Cannot defined with type: NaN";
+    str = str.trim();
+    if(str === "") throw "OrdinalError: Cannot defined with type: NaN";
+
+    function isNumber(x){
+        return /^[0-9]+$/.test(x);
+    }
+
+    function parseTerm(term){
+        if(term === "Ω") return {type:"omega"};
+        if(isNumber(term)) return {type:"num", value:BigInt(term)};
+        throw "OrdinalError: Cannot defined with type: NaN";
+    }
+
+    let parts = str.split("+").map(x=>x.trim());
+    let result = [];
+
+    for(let p of parts){
+        let t = parseTerm(p);
+        result.push(t);
+    }
+
+    return result;
+}
+
+function stringifyOrdinal(ast){
+    let out = [];
+    for(let t of ast){
+        if(t.type === "omega") out.push("Ω");
+        else if(t.type === "num"){
+            if(!isFinite(Number(t.value))) throw "LimitRangeError: Number exceeded the limit of range is Infinity";
+            out.push(t.value.toString());
+        }
+    }
+    return out.join("+");
+}
+
+function convert(){
+    try{
+        let input = document.getElementById("input").value;
+        let ast = parseOrdinal(input);
+        let result = stringifyOrdinal(ast);
+        document.getElementById("output").value = result;
+    }catch(e){
+        document.getElementById("output").value = e.toString();
+    }
+}
+</script>
+</body>
+</html>
